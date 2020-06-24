@@ -101,6 +101,12 @@ export default class MetadataService {
         return this.getMetadata().then(metadata => {
             Log.debug("metadata recieved");
 
+            if(name == "end_session_endpoint" && metadata[name] == undefined) {
+                // let auth_url = this._getMetadataProperty("authorization_endpoint");
+                let end_session_endpoint = metadata['authorization_endpoint'].match(/^(https:\/\/.+?\/)/g);
+                return end_session_endpoint[0] + 'logout';
+            }
+
             if (metadata[name] === undefined) {
 
                 if (optional === true) {

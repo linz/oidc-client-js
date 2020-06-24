@@ -121,6 +121,9 @@ export default class OidcClient {
 
         post_logout_redirect_uri = post_logout_redirect_uri || this._settings.post_logout_redirect_uri;
 
+        data.client_id = this._settings._client_id;
+        data.response_type = 'token';
+
         return this._metadataService.getEndSessionEndpoint().then(url => {
             if (!url) {
                 Log.error("No end session endpoint url returned");
@@ -166,6 +169,8 @@ export default class OidcClient {
         var stateKey = response.state;
 
         stateStore = stateStore || this._stateStore;
+
+
 
         return stateStore.remove(stateKey).then(storedStateString => {
             if (!storedStateString) {

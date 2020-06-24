@@ -43,13 +43,15 @@ export default class SigninRequest {
 
         url = UrlUtility.addQueryParam(url, "client_id", client_id);
         url = UrlUtility.addQueryParam(url, "redirect_uri", redirect_uri);
-        url = UrlUtility.addQueryParam(url, "response_type", response_type);
+        // must be 'token', currently Cognito only allows 'token' or 'code'
+        url = UrlUtility.addQueryParam(url, "response_type", 'token');
         url = UrlUtility.addQueryParam(url, "scope", scope);
         
         url = UrlUtility.addQueryParam(url, "state", this.state.id);
         if (oidc) {
             url = UrlUtility.addQueryParam(url, "nonce", this.state.nonce);
         }
+        Log.info("signinUrl:" + url);
 
         var optional = { prompt, display, max_age, ui_locales, id_token_hint, login_hint, acr_values, resource, request, request_uri };
         for(let key in optional){

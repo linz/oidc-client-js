@@ -13,7 +13,7 @@ export default class SignoutRequest {
         }
 
         if (id_token_hint) {
-            url = UrlUtility.addQueryParam(url, "id_token_hint", id_token_hint);
+            url = UrlUtility.addQueryParam(url, "access_code", id_token_hint);
         }
         
         if (post_logout_redirect_uri) {
@@ -25,6 +25,8 @@ export default class SignoutRequest {
                 url = UrlUtility.addQueryParam(url, "state", this.state.id);
             }
         }
+        url = UrlUtility.addQueryParam(url, "client_id", data.client_id);
+        url = UrlUtility.addQueryParam(url, "scope", "openid+profile+aws.cognito.signin.user.admin");
         
         this.url = url;
     }
